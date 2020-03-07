@@ -11,7 +11,9 @@ public class CircleArrayQueueDemo {
     public static void main(String[] args) {
         /**
          * 切记maxSize要比设计的队列容量多1
-         * 主要时因为容量为n时，rear-front 为0、1、2...n 共 n+1种结果，这样如果没有辅助标记 ，通过差值是无法区分队列空和队列满的情况，
+         * 在循环队列下，q[n]的队列中元素的个数可能为0,1,2…,n-2,n-1,n共n+1中可能性（0表示队空，n表示队满），
+         * 但是rear-front(尾指针和头指针下标的差值)的结果只可能是0,1,2…,n-2,n-1共n种结果，
+         * 因此，没办法使用n中结果去对应n+1中可能性，在不借助标记的情况下只能使用一个空的数据位来实现循环队列。
          */
         CircleArrayQueue queue = new CircleArrayQueue(4);
         char key = ' ';//接受用户输入
