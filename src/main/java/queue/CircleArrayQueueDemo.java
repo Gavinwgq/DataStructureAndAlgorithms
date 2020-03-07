@@ -9,7 +9,11 @@ import java.util.Scanner;
  */
 public class CircleArrayQueueDemo {
     public static void main(String[] args) {
-        CircleArrayQueue queue = new CircleArrayQueue(3);
+        /**
+         * 切记maxSize要比设计的队列容量多1
+         * 主要时因为容量为n时，rear-front 为0、1、2...n 共 n+1种结果，这样如果没有辅助标记 ，通过差值是无法区分队列空和队列满的情况，
+         */
+        CircleArrayQueue queue = new CircleArrayQueue(4);
         char key = ' ';//接受用户输入
         Scanner scanner = new Scanner(System.in);
         boolean loop = true;
