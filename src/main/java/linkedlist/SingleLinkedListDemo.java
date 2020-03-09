@@ -40,6 +40,53 @@ public class SingleLinkedListDemo {
         signLinkedList.delete(2);
         signLinkedList.list();
         signLinkedList.delete(5);
+
+        System.out.println("单链表的长度为size="+size(signLinkedList.getHead()));
+
+        HeroNode res1 = getLastIndexNode(signLinkedList.getHead(),1);
+        System.out.println("res1="+res1);
+        HeroNode res2 = getLastIndexNode(signLinkedList.getHead(),3);
+        System.out.println("res2="+res2);
+    }
+
+
+    /**
+     * 获取单链表长度（不包含头节点）
+     * @param head 头节点
+     * @return
+     */
+    public static int size(HeroNode head){
+        if(head.next == null){
+            return 0;
+        }
+        HeroNode cur = head.next;
+        int size = 0;
+        while (cur!=null){
+            size++;
+            cur = cur.next;
+        }
+        return size;
+    }
+
+    /**
+     * 获取单链表倒数第k个节点
+     * @param head 头节点
+     * @param index k
+     * @return
+     */
+    public static HeroNode getLastIndexNode(HeroNode head,int index){
+        if(head.next == null || index < 0){
+            return null;
+        }
+        int size = size(head);
+        if(index>size){
+            return null;
+        }
+        HeroNode cur = head.next;
+        for (int i = 0; i < size - index; i++) {
+            cur = cur.next;
+        }
+        return cur;
     }
 
 }
@@ -47,6 +94,10 @@ public class SingleLinkedListDemo {
 class SignLinkedList{
     //头节点，不存储具体数据，表示链表起点，位置不会变动
     private HeroNode head = new HeroNode(0,"","");
+
+    public HeroNode getHead() {
+        return head;
+    }
 
     //不考虑编号顺序，直接加到链表尾部
     public void add(HeroNode heroNode){
@@ -108,7 +159,7 @@ class SignLinkedList{
             temp.name = newHeroNode.name;
             temp.nickName = newHeroNode.nickName;
         }else{
-            System.out.printf("没有找到编号为%d的英雄",newHeroNode.no);
+            System.out.printf("没有找到编号为%d的英雄\n",newHeroNode.no);
         }
     }
 
@@ -128,7 +179,7 @@ class SignLinkedList{
         if (flag){
             temp.next = temp.next.next;
         }else{
-            System.out.printf("没有找到编号%d的英雄,无法删除",no);
+            System.out.printf("没有找到编号%d的英雄,无法删除\n",no);
         }
     }
     //遍历输出
