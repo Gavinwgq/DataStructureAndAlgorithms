@@ -36,6 +36,10 @@ public class SingleLinkedListDemo {
 
         HeroNode newhero2 = new HeroNode(5,"小卢","~玉麒麟~");
         signLinkedList.update(newhero2);
+        System.out.println("删除------");
+        signLinkedList.delete(2);
+        signLinkedList.list();
+        signLinkedList.delete(5);
     }
 
 }
@@ -105,6 +109,26 @@ class SignLinkedList{
             temp.nickName = newHeroNode.nickName;
         }else{
             System.out.printf("没有找到编号为%d的英雄",newHeroNode.no);
+        }
+    }
+
+    public void delete(int no){
+        HeroNode temp = head;
+        boolean flag = false;
+        while (true){
+            if(temp.next == null){
+                break;
+            }
+            if(temp.next.no == no){
+                flag = true;//找到待删除节点的前一个节点，这里很关键
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag){
+            temp.next = temp.next.next;
+        }else{
+            System.out.printf("没有找到编号%d的英雄,无法删除",no);
         }
     }
     //遍历输出
