@@ -27,6 +27,15 @@ public class SingleLinkedListDemo {
         //signLinkedList.addByOrder(hero2);
 
         signLinkedList.list();
+
+        System.out.println("修改------------");
+        HeroNode newhero1 = new HeroNode(2,"小卢","~玉麒麟~");
+        signLinkedList.update(newhero1);
+
+        signLinkedList.list();
+
+        HeroNode newhero2 = new HeroNode(5,"小卢","~玉麒麟~");
+        signLinkedList.update(newhero2);
     }
 
 }
@@ -74,6 +83,30 @@ class SignLinkedList{
         }
     }
 
+    //根据heronode的no查找更新
+    public void update(HeroNode newHeroNode){
+        if(head.next == null){
+            System.out.println("链表为空");
+        }
+        HeroNode temp = head;
+        boolean flag = false;
+        while (true){
+            if(temp == null){
+                break;//到链表尾部了
+            }
+            if(temp.no == newHeroNode.no){
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if(flag){
+            temp.name = newHeroNode.name;
+            temp.nickName = newHeroNode.nickName;
+        }else{
+            System.out.printf("没有找到编号为%d的英雄",newHeroNode.no);
+        }
+    }
     //遍历输出
     public void list(){
         if(head.next == null){
