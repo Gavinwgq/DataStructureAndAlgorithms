@@ -96,7 +96,7 @@ public class SingleLinkedListDemo {
         return cur;
     }
 
-    //反转单链表
+    //反转单链表（头插法）
     public static void reverseList(HeroNode head){
         if(head.next == null || head.next.next == null){
             return;//链表为空或只有一个元素，无需反转
