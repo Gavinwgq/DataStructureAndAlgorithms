@@ -47,6 +47,13 @@ public class SingleLinkedListDemo {
         System.out.println("res1="+res1);
         HeroNode res2 = getLastIndexNode(signLinkedList.getHead(),3);
         System.out.println("res2="+res2);
+
+        System.out.println("------测试链表反转-------");
+        System.out.println("原来的链表");
+        signLinkedList.list();
+        reverseList(signLinkedList.getHead());
+        System.out.println("反转后的链表");
+        signLinkedList.list();
     }
 
 
@@ -89,6 +96,22 @@ public class SingleLinkedListDemo {
         return cur;
     }
 
+    //反转单链表
+    public static void reverseList(HeroNode head){
+        if(head.next == null || head.next.next == null){
+            return;//链表为空或只有一个元素，无需反转
+        }
+        HeroNode cur = head.next;
+        HeroNode next = null;
+        HeroNode reverseHead = new HeroNode(0,"","");
+        while (cur!=null){
+            next = cur.next;//保存当前节点的下一个节点，后面有用
+            cur.next = reverseHead.next;//将cur的下一个节点指向新链表的最前端
+            reverseHead.next = cur;//将cur链接到新链表上
+            cur = next;//cur 后移
+        }
+        head.next = reverseHead.next;
+    }
 }
 
 class SignLinkedList{
