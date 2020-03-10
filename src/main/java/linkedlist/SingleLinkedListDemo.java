@@ -1,5 +1,7 @@
 package linkedlist;
 
+import java.util.Stack;
+
 /**
  * 单链表
  * @author wangguoqiang
@@ -54,6 +56,8 @@ public class SingleLinkedListDemo {
         reverseList(signLinkedList.getHead());
         System.out.println("反转后的链表");
         signLinkedList.list();
+        System.out.println("反转后的链表再逆序打印");
+        reversePrint(signLinkedList.getHead());
     }
 
 
@@ -94,6 +98,23 @@ public class SingleLinkedListDemo {
             cur = cur.next;
         }
         return cur;
+    }
+
+    //单链表逆序打印，不改变链表结构
+    public static void reversePrint(HeroNode head){
+        if(head.next == null){
+            return;
+        }
+        HeroNode cur = head.next;
+        //利用栈的后进先出的特性
+        Stack<HeroNode> stack = new Stack<>();
+        while (cur!=null){
+            stack.push(cur);
+            cur = cur.next;
+        }
+        while (stack.size()>0){
+            System.out.println(stack.pop());
+        }
     }
 
     //反转单链表（头插法）
