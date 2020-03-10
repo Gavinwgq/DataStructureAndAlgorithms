@@ -71,11 +71,11 @@ public class SingleLinkedListDemo {
         mergeList(signLinkedList1.getHead(),signLinkedList2.getHead());
     }
 
-
-
-
-
-
+    /**
+     * 合并两个有序的单链表，合并后依然有序
+     * @param head1
+     * @param head2
+     */
     public static void mergeList(HeroNode head1,HeroNode head2){
         HeroNode cur1 = head1.next;
         HeroNode cur2 = head2.next;
