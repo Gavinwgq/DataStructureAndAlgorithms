@@ -27,6 +27,12 @@ public class SignleLinkList {
 
     }
 
+    /**
+     * 合并有序单链表
+     * @param node1
+     * @param node2
+     * @return
+     */
     public static Node merge(Node node1,Node node2){
         Node cur1 = node1;
         Node cur2 = node2;
@@ -52,6 +58,11 @@ public class SignleLinkList {
         }
         return temp.next;
     }
+
+    /**
+     * 打印链表
+     * @param head
+     */
     public static void print(Node head){
         Node temp = head;
         while (temp != null){
