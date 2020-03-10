@@ -45,6 +45,7 @@ public class SignleLinkList {
             }
             if(cur2 == null){
                 cur.next = cur1;
+                break;
             }
             if(cur1.data<cur2.data){
                 cur.next = cur1;

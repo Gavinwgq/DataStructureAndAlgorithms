@@ -88,6 +88,7 @@ public class SingleLinkedListDemo {
             }
             if(cur2 == null){
                 cur.next = cur1;
+                break;
             }
             if(cur1.no<cur2.no){
                 cur.next = cur1;
