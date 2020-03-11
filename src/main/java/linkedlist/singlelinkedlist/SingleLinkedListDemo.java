@@ -1,6 +1,4 @@
-package linkedlist;
-
-import java.util.Stack;
+package linkedlist.singlelinkedlist;
 
 /**
  * 单链表

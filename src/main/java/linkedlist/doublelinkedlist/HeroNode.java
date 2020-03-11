@@ -1,14 +1,15 @@
-package linkedlist;
+package linkedlist.doublelinkedlist;
 
 /**
  * @author wangguoqiang
- * @date 2020/3/10 20:56
+ * @date 2020/3/11 21:11
  */
-public class HeroNode{
+public class HeroNode {
     public int no;
     public String name;
     public String nickName;
     public HeroNode next;//指向下一个节点
+    public HeroNode pre;//指向前一个节点
 
     public HeroNode(int no, String name, String nickName) {
         this.no = no;
