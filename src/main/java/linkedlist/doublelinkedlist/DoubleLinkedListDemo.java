@@ -12,12 +12,17 @@ public class DoubleLinkedListDemo {
         HeroNode hero4 = new HeroNode(4,"林冲","豹子头");
         HeroNode hero5 = new HeroNode(5,"公孙胜","入云龙");
         DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
-        doubleLinkedList.add(hero1);
+        /*doubleLinkedList.add(hero1);
         doubleLinkedList.add(hero2);
         doubleLinkedList.add(hero3);
         doubleLinkedList.add(hero4);
-        doubleLinkedList.add(hero5);
+        doubleLinkedList.add(hero5);*/
 
+        doubleLinkedList.addByOrder(hero1);
+        doubleLinkedList.addByOrder(hero3);
+        doubleLinkedList.addByOrder(hero5);
+        doubleLinkedList.addByOrder(hero4);
+        doubleLinkedList.addByOrder(hero2);
         doubleLinkedList.list();
 
         System.out.println("测试修改");

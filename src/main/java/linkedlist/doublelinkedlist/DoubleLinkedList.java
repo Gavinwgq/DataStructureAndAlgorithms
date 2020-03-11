@@ -28,6 +28,35 @@ public class DoubleLinkedList {
         heroNode.pre = temp;
     }
 
+    //按照heronode的no属性大小进行添加，如果编号已存在提示添加失败
+    public void addByOrder(HeroNode heroNode){
+        HeroNode temp = head;
+        boolean flag = false;
+        while (true){
+            if (temp.next ==null){
+                break;//已到链表尾部
+            }
+            if(temp.next.no>heroNode.no){
+                break;//位置找到
+            }
+            if(temp.next.no == heroNode.no){
+                flag = true;
+                break;//编号已存在
+            }
+            temp = temp.next;
+        }
+        if(flag){
+            System.out.printf("英雄编号%d已经存在，不能加入了\n",heroNode.no);
+        }else{
+            heroNode.next = temp.next;
+            heroNode.pre = temp;
+            if(temp.next!=null){
+                temp.next.pre = heroNode;
+            }
+            temp.next = heroNode;
+        }
+    }
+
     //根据heronode的no查找更新
     public void update(HeroNode newHeroNode){
         if(head.next == null){
