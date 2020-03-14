@@ -55,9 +55,10 @@ class ArrayStack{
         if(isEmpty()){
             throw new RuntimeException("栈为空，在没有数据可弹出");
         }
-        int val = stack[top];
+        /*int val = stack[top];
         top--;
-        return val;
+        return val;*/
+        return stack[top--];
     }
 
     public void list(){
