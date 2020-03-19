@@ -11,7 +11,7 @@ public class Queen8 {
      * arr[i] = val 表示 将皇后放置在第（i+1）行第（val+1）列的位置
      * 比如 arr[2] = 6 将皇后放置在第3行第7列的位置
      */
-    private int[] arr = new int[8];
+    private int[] arr = new int[max];
     private int count = 0;
     public static void main(String[] args) {
         Queen8 queen8 = new Queen8();
