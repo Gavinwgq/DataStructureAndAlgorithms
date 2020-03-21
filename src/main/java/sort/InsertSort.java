@@ -16,9 +16,11 @@ public class InsertSort {
     }
 
     public static void insertSort(int[] arr){
+        int insertVal = 0;
+        int insertIndex = 0;
         for (int i = 1; i < arr.length; i++) {
-            int insertVal = arr[i];//待插入的值
-            int insertIndex = i-1;//待插入的位置
+            insertVal = arr[i];//待插入的值
+            insertIndex = i-1;//待插入的位置
             while (insertIndex >= 0 && insertVal < arr[insertIndex]){
                 //数据后移
                 arr[insertIndex+1] = arr[insertIndex];
@@ -29,9 +31,10 @@ public class InsertSort {
     }
 
     public static void insertSort2(int[] arr){
+        int temp = 0,j = 0;
         for (int i = 1; i < arr.length; i++) {
-            int temp = arr[i];
-            int j = i-1;
+            temp = arr[i];
+            j = i-1;
             for (; j >=0 && temp<arr[j] ; j--) {
                 arr[j+1] = arr[j];
             }
