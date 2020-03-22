@@ -7,7 +7,8 @@ package sort;
  */
 public class QuickSort {
     public static void main(String[] args) {
-        int[] arr = {3,5,2,6,4,1,9,7,8};
+        //int[] arr = {3,5,2,6,4,1,4,7,8};
+        int[] arr = {3,4,2,1};
         quickSort(arr,0,arr.length-1);
         for (int i = 0; i < arr.length; i++) {
             System.out.printf("%d\t",arr[i]);
@@ -37,13 +38,16 @@ public class QuickSort {
             arr[l] = arr[r];
             arr[r] = temp;
 
+            //如果不做相等的处理，当待排序的数组中出现和基准值相等的时候，出导致死循环的出现 需要移动坐标
             if(arr[l] == middle){
+                //不能是 l++;
                 r--;
             }
             if(arr[r] == middle){
                 l++;
             }
         }
+        //没有这个判断，会出现栈溢出
         if(l == r){
             l++;
             r--;
