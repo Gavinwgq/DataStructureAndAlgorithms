@@ -1,5 +1,9 @@
 package search;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
  * 二分查找
  * @author wangguoqiang
@@ -16,6 +20,12 @@ public class BinarySearch {
         }else{
             System.out.println("数据找到,下标为"+i);
         }
+
+        System.out.println("################");
+
+        int[] arr2 = {1,21,34,47,47,47,59,61,72};
+        List<Integer> list = binarySearch3(arr2, 0, arr2.length - 1, 47);
+        System.out.println(list);
     }
 
     //递归方式
@@ -48,5 +58,40 @@ public class BinarySearch {
             }
         }
         return -1;
+    }
+
+
+    //数组中存在多个时,找出所有索引
+    public static List<Integer> binarySearch3(int[] arr, int left, int right, int val){
+        if(left>right){
+            return Lists.newArrayList();
+        }
+        int mid = (left + right) / 2;
+        if(val>arr[mid]){
+            return binarySearch3(arr,mid+1,right,val);
+        }else if (val == arr[mid]){
+            List<Integer> result = Lists.newArrayList();
+            //先从mid向左查找
+            int temp = mid -1;
+            while (true){
+                //因为数组是有序的，所以arr[temp]!=val,就可以退出了
+                if(temp <0 || arr[temp]!=val){
+                    break;
+                }
+                result.add(temp--);
+            }
+            result.add(mid);
+            //再从mid向右查找
+            temp = mid + 1;
+            while (true){
+                if(temp >arr.length || arr[temp]!=val){
+                    break;
+                }
+                result.add(temp++);
+            }
+            return result;
+        }else{
+            return binarySearch3(arr,left,mid-1,val);
+        }
     }
 }
