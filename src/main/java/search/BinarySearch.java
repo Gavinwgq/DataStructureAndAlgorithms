@@ -9,7 +9,8 @@ public class BinarySearch {
 
     public static void main(String[] args) {
         int[] arr = {1,21,34,47,59,61,72};
-        int i = binarySearch(arr, 0, arr.length - 1, 61);
+        //int i = binarySearch(arr, 0, arr.length - 1, 61);
+        int i = binarySearch(arr,61);
         if(i == -1){
             System.out.println("未找到数据");
         }else{
@@ -30,5 +31,22 @@ public class BinarySearch {
         }else{
             return binarySearch(arr,left,mid-1,val);
         }
+    }
+
+    //循环方式
+    public static int binarySearch(int[] arr,int val){
+        int left = 0,right = arr.length-1;
+        int mid = 0;
+        while (left<right){
+            mid = (left + right) / 2;
+            if(val>arr[mid]){
+                left = mid +1;
+            }else if(val < arr[mid]){
+                right = mid - 1;
+            }else{
+                return mid;
+            }
+        }
+        return -1;
     }
 }
