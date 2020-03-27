@@ -24,6 +24,10 @@ public class BinaryTreeDemo {
         binaryTree.midOrder();
         System.out.println("-----后序遍历----");
         binaryTree.lastOrder();
+        System.out.println("-----遍历查找----");
+        System.out.println(binaryTree.preOrderSearch(3));
+        System.out.println(binaryTree.midOrderSearch(2));
+        System.out.println(binaryTree.lastOrderSearch(4));
     }
 }
 
@@ -50,6 +54,45 @@ class BinaryTree{
     public void lastOrder(){
         if(root != null){
             root.lastOrder();
+        }
+    }
+
+    /**
+     * 前序遍历查找
+     * @param no 要查找的编号
+     * @return
+     */
+    public HeroNode preOrderSearch(int no){
+        if(this.root != null){
+            return this.root.preOrderSearch(no);
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * 中序遍历查找
+     * @param no 要查找的编号
+     * @return
+     */
+    public HeroNode midOrderSearch(int no){
+        if(this.root != null){
+            return this.root.midOrderSearch(no);
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * 后序遍历查找
+     * @param no 要查找的编号
+     * @return
+     */
+    public HeroNode lastOrderSearch(int no){
+        if(this.root != null){
+            return this.root.lastOrderSearch(no);
+        }else{
+            return null;
         }
     }
 }
@@ -136,5 +179,74 @@ class HeroNode{
             this.right.lastOrder();
         }
         System.out.println(this);
+    }
+
+    /**
+     * 前序遍历查找
+     * @param no 要查找的编号
+     * @return
+     */
+    public HeroNode preOrderSearch(int no){
+        if(this.no == no){
+            return this;
+        }
+        HeroNode res = null;
+        if(this.left != null){
+            res = this.left.preOrderSearch(no);
+        }
+        if(res != null){
+            return res;
+        }
+        if(this.right != null){
+            res = this.right.preOrderSearch(no);
+        }
+        return res;
+    }
+
+    /**
+     * 中序遍历查找
+     * @param no 要查找的编号
+     * @return
+     */
+    public HeroNode midOrderSearch(int no){
+        HeroNode res = null;
+        if(this.left != null){
+            res = this.left.midOrderSearch(no);
+        }
+        if(res != null){
+            return res;
+        }
+        if(this.no == no){
+            return this;
+        }
+        if(this.right != null){
+            res = this.right.midOrderSearch(no);
+        }
+        return res;
+    }
+
+    /**
+     * 后序遍历查找
+     * @param no 要查找的编号
+     * @return
+     */
+    public HeroNode lastOrderSearch(int no){
+        HeroNode res = null;
+        if(this.left != null){
+            res = this.left.lastOrderSearch(no);
+        }
+        if(res != null){
+            return res;
+        }
+        if(this.right != null){
+            res = this.right.lastOrderSearch(no);
+        }
+        if(res != null){
+            return res;
+        }
+        if(this.no == no){
+            return this;
+        }
+        return res;
     }
 }
