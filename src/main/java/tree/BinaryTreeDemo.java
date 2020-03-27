@@ -14,8 +14,10 @@ public class BinaryTreeDemo {
         HeroNode heroNode2 = new HeroNode(2,"卢俊义");
         HeroNode heroNode3 = new HeroNode(3,"吴用");
         HeroNode heroNode4 = new HeroNode(4,"林冲");
+        HeroNode heroNode5 = new HeroNode(5,"关胜");
         root.setLeft(heroNode2);
         root.setRight(heroNode3);
+        heroNode3.setLeft(heroNode5);
         heroNode3.setRight(heroNode4);
         binaryTree.setRoot(root);
         System.out.println("-----前序遍历----");
@@ -28,6 +30,13 @@ public class BinaryTreeDemo {
         System.out.println(binaryTree.preOrderSearch(3));
         System.out.println(binaryTree.midOrderSearch(2));
         System.out.println(binaryTree.lastOrderSearch(4));
+
+        System.out.println("----删除前遍历----");
+        binaryTree.preOrder();
+        //binaryTree.delByNo(5);//叶子节点
+        binaryTree.delByNo(3);//非叶子节点
+        System.out.println("----删除后遍历----");
+        binaryTree.preOrder();
     }
 }
 
@@ -93,6 +102,18 @@ class BinaryTree{
             return this.root.lastOrderSearch(no);
         }else{
             return null;
+        }
+    }
+
+    public void delByNo(int no){
+        if(this.root != null){
+            if(this.root.getNo() == no){
+                this.root = null;
+            }else{
+                this.root.delByNo(no);
+            }
+        }else{
+            System.out.println("树为空");
         }
     }
 }
@@ -248,5 +269,27 @@ class HeroNode{
             return this;
         }
         return res;
+    }
+
+    /**
+     * 删除操作
+     * 规定：1、如果时叶子节点删除该节点，如果不是叶子节点，删除该子树
+     * @param no
+     */
+    public void delByNo(int no){
+        if(this.left!=null && this.left.no == no){
+            this.left = null;
+            return;
+        }
+        if(this.right!=null && this.right.no == no){
+            this.right = null;
+            return;
+        }
+        if(this.left!=null){
+            this.left.delByNo(no);
+        }
+        if(this.right!=null){
+            this.right.delByNo(no);
+        }
     }
 }
