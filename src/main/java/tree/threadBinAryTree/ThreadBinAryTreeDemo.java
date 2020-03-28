@@ -14,25 +14,35 @@ public class ThreadBinAryTreeDemo {
         HeroNode node4 = new HeroNode(8, "mary");
         HeroNode node5 = new HeroNode(10, "king");
         HeroNode node6 = new HeroNode(14, "dim");
+        HeroNode node7 = new HeroNode(17, "dims");
 
         root.setLeft(node2);
         root.setRight(node3);
         node2.setLeft(node4);
         node2.setRight(node5);
         node3.setLeft(node6);
+        node3.setRight(node7);
 
         ThreadBinAryTree threadBinAryTree = new ThreadBinAryTree();
         threadBinAryTree.setRoot(root);
-        threadBinAryTree.threadNodes(root);
+
 
         //测试一下
+        /*threadBinAryTree.threadNodesmid(root);
         HeroNode preNode = node5.getLeft();//no=3
         System.out.println("node5的前驱节点是=" + preNode);
         HeroNode postNode = node5.getRight();//no=1
         System.out.println("node5的后继节点是=" + postNode);
-
         System.out.println("使用线索化方式进行遍历");
-        threadBinAryTree.threadList();
+        threadBinAryTree.threadListmid();*/
+
+        threadBinAryTree.threadNodespre(root);
+        HeroNode preNode = node6.getLeft();//no=6
+        System.out.println("node6的前驱节点是=" + preNode);
+        HeroNode postNode = node6.getRight();//no=17
+        System.out.println("node6的后继节点是=" + postNode);
+        System.out.println("使用线索化方式进行遍历");
+        threadBinAryTree.threadListpre();
     }
 }
 
@@ -45,7 +55,7 @@ class ThreadBinAryTree {
         this.root = root;
     }
 
-    public void threadList() {
+    public void threadListmid() {
         HeroNode node = root;
         while (node != null) {
             //找到线索化的指针
@@ -67,11 +77,11 @@ class ThreadBinAryTree {
      *
      * @param node
      */
-    public void threadNodes(HeroNode node) {
+    public void threadNodesmid(HeroNode node) {
         if (node == null) {
             return;
         }
-        threadNodes(node.getLeft());
+        threadNodesmid(node.getLeft());
         //处理前驱节点
         if (node.getLeft() == null) {
             node.setLeft(pre);
@@ -84,8 +94,62 @@ class ThreadBinAryTree {
         }
         //这一句非常重要，否则下次递归时就无法完成上面后继节点的处理了
         pre = node;
-        threadNodes(node.getRight());
+        threadNodesmid(node.getRight());
 
+    }
+
+    public void threadListpre() {
+        HeroNode node = root;
+        while (node != null) {
+            System.out.println(node);
+            //找到线索化的指针
+            while (node.getLeftType() == 0) {
+                node = node.getLeft();
+                System.out.println(node);
+            }
+            //只要后继节点指针存在，就一直找下去
+            while (node.getRightType() == 1) {
+                node = node.getRight();
+                System.out.println(node);
+            }
+            if(node.getLeftType() == 0){
+                node = node.getLeft();
+            }else if(node.getRightType() == 0){
+                node = node.getRight();
+            }else{
+                break;
+            }
+
+        }
+    }
+
+    /**
+     * 对一个节点进行前序线索化
+     *
+     * @param node
+     */
+    public void threadNodespre(HeroNode node) {
+        if (node == null) {
+            return;
+        }
+        //处理前驱节点
+        if (node.getLeft() == null) {
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        //处理后继节点，实际上是在下次递归时进行处理的
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        //这一句非常重要，否则下次递归时就无法完成上面后继节点的处理了
+        pre = node;
+        if(node.getLeftType()!=1){
+            threadNodespre(node.getLeft());
+        }
+        if(node.getRightType()!=1){
+            threadNodespre(node.getRight());
+        }
     }
 
 }
