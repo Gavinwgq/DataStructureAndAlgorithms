@@ -23,6 +23,13 @@ public class ThreadBinAryTreeDemo {
         node3.setLeft(node6);
         node3.setRight(node7);
 
+        node2.setParent(root);
+        node3.setParent(root);
+        node4.setParent(node2);
+        node5.setParent(node2);
+        node6.setParent(node3);
+        node7.setParent(node3);
+
         ThreadBinAryTree threadBinAryTree = new ThreadBinAryTree();
         threadBinAryTree.setRoot(root);
 
@@ -36,13 +43,23 @@ public class ThreadBinAryTreeDemo {
         System.out.println("使用线索化方式进行遍历");
         threadBinAryTree.threadListmid();*/
 
-        threadBinAryTree.threadNodespre(root);
+        /*threadBinAryTree.threadNodespre(root);
         HeroNode preNode = node6.getLeft();//no=6
         System.out.println("node6的前驱节点是=" + preNode);
         HeroNode postNode = node6.getRight();//no=17
         System.out.println("node6的后继节点是=" + postNode);
         System.out.println("使用线索化方式进行遍历");
-        threadBinAryTree.threadListpre();
+        threadBinAryTree.threadListpre();*/
+
+
+
+        threadBinAryTree.threadNodespost(root);
+        HeroNode preNode = node6.getLeft();//no=3
+        System.out.println("node6的前驱节点是=" + preNode);
+        HeroNode postNode = node6.getRight();//no=17
+        System.out.println("node6的后继节点是=" + postNode);
+        System.out.println("使用线索化方式进行遍历");
+        threadBinAryTree.threadListpost();
     }
 }
 
@@ -152,6 +169,63 @@ class ThreadBinAryTree {
         }
     }
 
+    public void threadListpost() {
+        HeroNode node = root;
+        HeroNode preNode = null;
+        //找到线索化的指针
+        while (node.getLeftType() == 0) {
+            node = node.getLeft();
+        }
+        while (node != null) {
+            if(node.getRightType() == 1){
+                System.out.println(node);
+                preNode = node;
+                node = node.getRight();
+            }else{
+                if(node.getRight() == preNode){
+                    System.out.println(node);
+                    if(node == root){
+                        return;
+                    }
+                    preNode = node;
+                    node = node.getParent();
+                }else{
+                    node = node.getRight();
+                    while (node != null && node.getLeftType()!=1){
+                        node = node.getLeft();
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 对一个节点进行后序线索化
+     *
+     * @param node
+     */
+    public void threadNodespost(HeroNode node) {
+        if (node == null) {
+            return;
+        }
+        threadNodespost(node.getLeft());
+        threadNodespost(node.getRight());
+
+        //处理前驱节点
+        if (node.getLeft() == null) {
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        //处理后继节点，实际上是在下次递归时进行处理的
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        //这一句非常重要，否则下次递归时就无法完成上面后继节点的处理了
+        pre = node;
+
+    }
 }
 
 class HeroNode {
@@ -159,6 +233,7 @@ class HeroNode {
     private String name;
     private HeroNode left;
     private HeroNode right;
+    private HeroNode parent;//父节点，后序线索化遍历要用到
     //0=左子树，1=前驱节点
     private int leftType;
     //0=右子树，1=后继节点
@@ -167,6 +242,14 @@ class HeroNode {
     public HeroNode(int no, String name) {
         this.no = no;
         this.name = name;
+    }
+
+    public HeroNode getParent() {
+        return parent;
+    }
+
+    public void setParent(HeroNode parent) {
+        this.parent = parent;
     }
 
     public int getLeftType() {
