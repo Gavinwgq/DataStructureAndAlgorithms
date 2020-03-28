@@ -2,17 +2,18 @@ package tree.threadBinAryTree;
 
 /**
  * 线索化二叉树
+ *
  * @author wangguoqiang
  * @date 2020/3/28 12:22
  */
 public class ThreadBinAryTreeDemo {
     public static void main(String[] args) {
-        HeroNode root = new HeroNode(1,"tom");
-        HeroNode node2 = new HeroNode(3,"jack");
-        HeroNode node3 = new HeroNode(6,"smith");
-        HeroNode node4 = new HeroNode(8,"mary");
-        HeroNode node5 = new HeroNode(10,"king");
-        HeroNode node6 = new HeroNode(14,"dim");
+        HeroNode root = new HeroNode(1, "tom");
+        HeroNode node2 = new HeroNode(3, "jack");
+        HeroNode node3 = new HeroNode(6, "smith");
+        HeroNode node4 = new HeroNode(8, "mary");
+        HeroNode node5 = new HeroNode(10, "king");
+        HeroNode node6 = new HeroNode(14, "dim");
 
         root.setLeft(node2);
         root.setRight(node3);
@@ -26,13 +27,16 @@ public class ThreadBinAryTreeDemo {
 
         //测试一下
         HeroNode preNode = node5.getLeft();//no=3
-        System.out.println("node5的前驱节点是="+preNode);
+        System.out.println("node5的前驱节点是=" + preNode);
         HeroNode postNode = node5.getRight();//no=1
-        System.out.println("node5的后继节点是="+postNode);
+        System.out.println("node5的后继节点是=" + postNode);
+
+        System.out.println("使用线索化方式进行遍历");
+        threadBinAryTree.threadList();
     }
 }
 
-class ThreadBinAryTree{
+class ThreadBinAryTree {
     private HeroNode root;
     //指向要线索化节点的前一个节点，便于进行前驱线索
     private HeroNode pre = null;
@@ -41,22 +45,40 @@ class ThreadBinAryTree{
         this.root = root;
     }
 
+    public void threadList() {
+        HeroNode node = root;
+        while (node != null) {
+            //找到线索化的指针
+            while (node.getLeftType() == 0) {
+                node = node.getLeft();
+            }
+            System.out.println(node);
+            //只要后继节点指针存在，就一直找下去
+            while (node.getRightType() == 1) {
+                node = node.getRight();
+                System.out.println(node);
+            }
+            node = node.getRight();
+        }
+    }
+
     /**
      * 对一个节点进行中序线索化
+     *
      * @param node
      */
-    public void threadNodes(HeroNode node){
-        if(node == null){
+    public void threadNodes(HeroNode node) {
+        if (node == null) {
             return;
         }
         threadNodes(node.getLeft());
         //处理前驱节点
-        if(node.getLeft() == null){
+        if (node.getLeft() == null) {
             node.setLeft(pre);
             node.setLeftType(1);
         }
         //处理后继节点，实际上是在下次递归时进行处理的
-        if(pre != null && pre.getRight() == null){
+        if (pre != null && pre.getRight() == null) {
             pre.setRight(node);
             pre.setRightType(1);
         }
@@ -65,79 +87,10 @@ class ThreadBinAryTree{
         threadNodes(node.getRight());
 
     }
-    //前序遍历
-    public void preOrder(){
-        if(root != null){
-            root.preOrder();
-        }
-    }
-    //中序遍历
-    public void midOrder(){
-        if(root != null){
-            root.midOrder();
-        }
-    }
 
-    //后序遍历
-    public void lastOrder(){
-        if(root != null){
-            root.lastOrder();
-        }
-    }
-
-    /**
-     * 前序遍历查找
-     * @param no 要查找的编号
-     * @return
-     */
-    public HeroNode preOrderSearch(int no){
-        if(this.root != null){
-            return this.root.preOrderSearch(no);
-        }else{
-            return null;
-        }
-    }
-
-    /**
-     * 中序遍历查找
-     * @param no 要查找的编号
-     * @return
-     */
-    public HeroNode midOrderSearch(int no){
-        if(this.root != null){
-            return this.root.midOrderSearch(no);
-        }else{
-            return null;
-        }
-    }
-
-    /**
-     * 后序遍历查找
-     * @param no 要查找的编号
-     * @return
-     */
-    public HeroNode lastOrderSearch(int no){
-        if(this.root != null){
-            return this.root.lastOrderSearch(no);
-        }else{
-            return null;
-        }
-    }
-
-    public void delByNo(int no){
-        if(this.root != null){
-            if(this.root.getNo() == no){
-                this.root = null;
-            }else{
-                this.root.delByNo(no);
-            }
-        }else{
-            System.out.println("树为空");
-        }
-    }
 }
 
-class HeroNode{
+class HeroNode {
     private int no;
     private String name;
     private HeroNode left;
@@ -208,127 +161,4 @@ class HeroNode{
                 '}';
     }
 
-    //前序遍历
-    public void preOrder(){
-        System.out.println(this);
-        if(this.left!=null){
-            this.left.preOrder();
-        }
-        if(this.right!=null){
-            this.right.preOrder();
-        }
-    }
-
-    //中序遍历
-    public void midOrder(){
-        if(this.left!=null){
-            this.left.midOrder();
-        }
-        System.out.println(this);
-        if(this.right!=null){
-            this.right.midOrder();
-        }
-    }
-
-    //后序遍历
-    public void lastOrder(){
-        if(this.left!=null){
-            this.left.lastOrder();
-        }
-        if(this.right!=null){
-            this.right.lastOrder();
-        }
-        System.out.println(this);
-    }
-
-    /**
-     * 前序遍历查找
-     * @param no 要查找的编号
-     * @return
-     */
-    public HeroNode preOrderSearch(int no){
-        if(this.no == no){
-            return this;
-        }
-        HeroNode res = null;
-        if(this.left != null){
-            res = this.left.preOrderSearch(no);
-        }
-        if(res != null){
-            return res;
-        }
-        if(this.right != null){
-            res = this.right.preOrderSearch(no);
-        }
-        return res;
-    }
-
-    /**
-     * 中序遍历查找
-     * @param no 要查找的编号
-     * @return
-     */
-    public HeroNode midOrderSearch(int no){
-        HeroNode res = null;
-        if(this.left != null){
-            res = this.left.midOrderSearch(no);
-        }
-        if(res != null){
-            return res;
-        }
-        if(this.no == no){
-            return this;
-        }
-        if(this.right != null){
-            res = this.right.midOrderSearch(no);
-        }
-        return res;
-    }
-
-    /**
-     * 后序遍历查找
-     * @param no 要查找的编号
-     * @return
-     */
-    public HeroNode lastOrderSearch(int no){
-        HeroNode res = null;
-        if(this.left != null){
-            res = this.left.lastOrderSearch(no);
-        }
-        if(res != null){
-            return res;
-        }
-        if(this.right != null){
-            res = this.right.lastOrderSearch(no);
-        }
-        if(res != null){
-            return res;
-        }
-        if(this.no == no){
-            return this;
-        }
-        return res;
-    }
-
-    /**
-     * 删除操作
-     * 规定：1、如果时叶子节点删除该节点，如果不是叶子节点，删除该子树
-     * @param no
-     */
-    public void delByNo(int no){
-        if(this.left!=null && this.left.no == no){
-            this.left = null;
-            return;
-        }
-        if(this.right!=null && this.right.no == no){
-            this.right = null;
-            return;
-        }
-        if(this.left!=null){
-            this.left.delByNo(no);
-        }
-        if(this.right!=null){
-            this.right.delByNo(no);
-        }
-    }
 }
