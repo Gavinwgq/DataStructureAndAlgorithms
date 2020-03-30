@@ -52,6 +52,7 @@ public class MergeSort {
         }
 
         t = 0;
+        //复制回原数组
         while (left<=right){
             arr[left++] = temp[t++];
         }
