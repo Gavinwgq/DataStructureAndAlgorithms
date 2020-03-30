@@ -43,6 +43,7 @@ public class MergeSort {
                 temp[t++] = arr[j++];
             }
         }
+        //上一个循环结束后，如果一侧还为结束，直接复制过去即可
         while (i<=mid){
             temp[t++] = arr[i++];
         }
