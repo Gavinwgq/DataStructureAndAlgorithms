@@ -1,5 +1,6 @@
 package tree.huffmanCode;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import java.util.Arrays;
@@ -19,7 +20,65 @@ public class HuffmanCode {
         byte[] contentBytes = content.getBytes();
         byte[] zip = huffmanZip(contentBytes);
         System.out.println(Arrays.toString(zip));
-        System.out.println(zip.length);
+        //System.out.println(zip.length);
+        byte[] bytes = decode(zip);
+        System.out.println("解码后的结果为："+new String(bytes));
+    }
+
+    /**
+     * 解码
+     * @param huffmanBytes
+     * @return
+     */
+    private static byte[] decode(byte[] huffmanBytes){
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < huffmanBytes.length; i++) {
+            boolean flag = (i != huffmanBytes.length-1);
+            builder.append(byte2bits(flag,huffmanBytes[i]));
+        }
+        //System.out.println(builder.toString());
+        Map<String, Byte> stringByteMap = huffmanCodes.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+        List<Byte> byteList = Lists.newArrayList();
+        for (int i = 0; i < builder.length(); ) {
+            int count = 1;
+            boolean flag = true;
+            Byte b = null;
+            while (flag){
+                String key = builder.substring(i,i+count);//i不动，count++，不停的去匹配，直到找到解码表中对应的字符
+                b = stringByteMap.get(key);
+                if(b!=null){
+                    byteList.add(b);
+                    flag = false;
+                }else{
+                    count++;
+                }
+            }
+            i+=count;
+        }
+        byte[] result = new byte[byteList.size()];
+        for (int i = 0; i < byteList.size(); i++) {
+            result[i] = byteList.get(i);
+        }
+        return result;
+    }
+
+    /**
+     * byte转成对应二进制
+     * @param flag 高位是否补0
+     * @param b
+     * @return
+     */
+    private static String byte2bits(boolean flag,byte b){
+        int temp = b;
+        if(flag){
+            temp |= 256;
+        }
+        String str = Integer.toBinaryString(temp);
+        if(flag){
+            return str.substring(str.length()-8);
+        }else{
+            return str;
+        }
     }
 
     /**
@@ -39,6 +98,7 @@ public class HuffmanCode {
         for (byte b : bytes) {
             builder.append(huffmanCodes.get(b));
         }
+        //System.out.println("***"+builder.toString());
         int len = (builder.length()+7)/8;
         byte[] result = new byte[len];
         int index = 0;
