@@ -23,17 +23,27 @@ public class HuffmanCode {
         preOrder(root);
         getCodes(root,"",stringBuilder);
         System.out.println(huffmanCodes);
-        String zip = zip(contentBytes);
-        System.out.println(zip);
-        System.out.println(zip.length());
+        byte[] zip = zip(contentBytes);
+        System.out.println(Arrays.toString(zip));
+        System.out.println(zip.length);
     }
 
-    private static String zip(byte[] bytes){
+    private static byte[] zip(byte[] bytes){
         StringBuilder builder = new StringBuilder();
         for (byte b : bytes) {
             builder.append(huffmanCodes.get(b));
         }
-        return builder.toString();
+        int len = (builder.length()+7)/8;
+        byte[] result = new byte[len];
+        int index = 0;
+        for (int i = 0; i < builder.length(); i+=8) {
+            if(i+8<builder.length()){
+                result[index++] = (byte) Integer.parseInt(builder.substring(i,i+8),2);
+            }else{
+                result[index] = (byte) Integer.parseInt(builder.substring(i),2);
+            }
+        }
+        return result;
     }
     static Map<Byte,String> huffmanCodes = Maps.newHashMap();
     static StringBuilder stringBuilder = new StringBuilder();
