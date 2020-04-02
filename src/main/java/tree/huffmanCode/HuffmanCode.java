@@ -17,15 +17,21 @@ public class HuffmanCode {
     public static void main(String[] args) {
         String content = "i like like like java do you like a java";
         byte[] contentBytes = content.getBytes();
-        List<Node> nodeList = getNodes(contentBytes);
-        System.out.println(nodeList);
-        Node root = createHuffmanTree(nodeList);
-        preOrder(root);
-        getCodes(root,"",stringBuilder);
-        System.out.println(huffmanCodes);
-        byte[] zip = zip(contentBytes);
+        byte[] zip = huffmanZip(contentBytes);
         System.out.println(Arrays.toString(zip));
         System.out.println(zip.length);
+    }
+
+    /**
+     * 赫夫曼编码压缩
+     * @param bytes 原始字符串对应的bytes数组
+     * @return 压缩后的byte数组
+     */
+    private static byte[] huffmanZip(byte[] bytes){
+        List<Node> nodeList = getNodes(bytes);
+        Node root = createHuffmanTree(nodeList);
+        getCodes(root,"",stringBuilder);
+        return zip(bytes);
     }
 
     private static byte[] zip(byte[] bytes){
