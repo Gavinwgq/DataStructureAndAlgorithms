@@ -83,16 +83,25 @@ class BinarySortTree{
             targetNode.value = minValue;
         }else{////如果要删除的节点只有一个子树
             if(targetNode.left!=null){//待删除节点左子树不为空
-                if(parent.left == targetNode){//待删除节点是父节点的左子节点
-                    parent.left = targetNode.left;
+                if(parent!=null){
+                    if(parent.left == targetNode){//待删除节点是父节点的左子节点
+                        parent.left = targetNode.left;
+                    }else{
+                        parent.right = targetNode.left;
+                    }
                 }else{
-                    parent.right = targetNode.left;
+                    root = targetNode.left;
                 }
+
             }else{//待删除节点右子树不为空
-                if(parent.left == targetNode){//待删除节点是父节点的左子节点
-                    parent.left = targetNode.right;
+                if(parent!=null){
+                    if(parent.left == targetNode){//待删除节点是父节点的左子节点
+                        parent.left = targetNode.right;
+                    }else{
+                        parent.right = targetNode.right;
+                    }
                 }else{
-                    parent.right = targetNode.right;
+                    root = targetNode.right;
                 }
             }
         }
