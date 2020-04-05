@@ -21,10 +21,15 @@ public class BinarySortTreeDemo {
         }
         tree.infixOrder();
         System.out.println("测试删除");
-        //tree.delNode(2);//删除叶子节点
-        //tree.delNode(1);//删除只有一颗子树的节点
-        //tree.delNode(10);//删除有两个子树的节点
+        tree.delNode(2);//删除叶子节点
         tree.delNode(7);//删除根节点
+        tree.delNode(3);
+        tree.delNode(5);
+        tree.delNode(9);
+        tree.delNode(12);
+        tree.delNode(10);//删除有两个子树的节点
+        tree.delNode(1);//删除只有一颗子树的节点
+
         tree.infixOrder();
     }
 }
@@ -83,7 +88,7 @@ class BinarySortTree{
             targetNode.value = minValue;
         }else{////如果要删除的节点只有一个子树
             if(targetNode.left!=null){//待删除节点左子树不为空
-                if(parent!=null){
+                if(parent!=null){//如果此时要删除的是根节点，且根节点只有一个子树了，那么parent为null,不加判断的话，就会出现异常
                     if(parent.left == targetNode){//待删除节点是父节点的左子节点
                         parent.left = targetNode.left;
                     }else{
