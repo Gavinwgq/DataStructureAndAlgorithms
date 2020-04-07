@@ -1,8 +1,6 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 图(使用邻接矩阵表示)
@@ -30,8 +28,11 @@ public class Graph {
 
         graph.showGraph();
 
-        System.out.println("深度优先遍历");
-        graph.dfs();
+        /*System.out.println("深度优先遍历");
+        graph.dfs();*/
+
+        System.out.println("广度优先遍历");
+        graph.bfs();
     }
 
     public Graph(int n) {
@@ -86,6 +87,35 @@ public class Graph {
         for (int i = 0; i < vertexs.size(); i++) {
             if(!isVisted[i]){
                 dfs(isVisted,i);
+            }
+        }
+    }
+
+    private void bfs(boolean[] isVisted,int i){
+        int u;//队列头节点对应下标
+        int w;//u的邻接节点下标
+        LinkedList<Integer> queue = new LinkedList<>();
+        System.out.print(getVertex(i)+"->");//输出该节点
+        isVisted[i] = true;//标记该节点被访问过了
+        queue.addLast(i);
+        while (!queue.isEmpty()){
+            u = queue.removeFirst();
+            w = getFirstNeighbor(u);
+            while (w!=-1){
+                if(!isVisted[w]){
+                    System.out.print(getVertex(w)+"->");
+                    isVisted[w] = true;
+                    queue.addLast(w);
+                }
+                w = getNextNeighbor(u,w);
+            }
+        }
+    }
+
+    public void bfs(){
+        for (int i = 0; i < vertexs.size(); i++) {
+            if(!isVisted[i]){
+                bfs(isVisted,i);
             }
         }
     }
