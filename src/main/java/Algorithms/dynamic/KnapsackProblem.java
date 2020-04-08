@@ -31,7 +31,7 @@ public class KnapsackProblem {
                     //v[i][j] = Math.max(v[i-1][j],val[i-1]+v[i-1][j-w[i-1]]);
                     if(v[i-1][j]<val[i-1]+v[i-1][j-w[i-1]]){
                         v[i][j] = val[i-1]+v[i-1][j-w[i-1]];
-                        path[i][j] = 1;
+                        path[i][j] = 1;//第i个商品放入了背包
                     }else{
                         v[i][j] = v[i-1][j];
                     }
@@ -48,10 +48,11 @@ public class KnapsackProblem {
 
         int i = path.length-1;
         int j = path[0].length-1;
+        //回溯
         while (i>0 && j>0){
             if(path[i][j] == 1){
                 System.out.printf("第%d个商品放入背包\n",i);
-                j -=w[i-1];
+                j -= w[i-1];//第i个商品的重量是w[i-1],放入后，剩余的容量就是j-w[i-1]
             }
             i--;
         }
