@@ -2,6 +2,7 @@ package Algorithms.horsechessboard;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * 马踏棋盘（骑士周游问题）
@@ -70,6 +71,8 @@ public class HorseChessboard {
         isVitised[row*X+column] = true;
         chessboard[row][column] = step;
        ArrayList<Point> nextPoints = getNextPoints(new Point(row, column));
+       //算法优化，下一步的下一步可能性最小的先执行，减少回溯的次数
+       nextPoints.sort(Comparator.comparingInt(o -> getNextPoints(o).size()));
        while (!nextPoints.isEmpty()){
            Point next = nextPoints.remove(0);
            if(!isVitised[next.y*X+next.x]){
